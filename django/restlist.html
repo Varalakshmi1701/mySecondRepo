@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% block title %}Restaurant List{% endblock %}
+{% block content %}
+<div class="container mt-4">
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-{{m.tags}} alert-dismissable">
+<button type="button" class="close" data-dismiss="alert">&times </button>
+{{m}}
+</div>
+{% endfor %}
+{% endif %}
+<div class="row" >
+<div class="card col-md-4 shadow-lg">
+<div class="card-body">
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<h3>Add Restaurant</h3> 
+{{q.as_p}}
+
+</div>
+<div class="row">
+<div class="col">
+<input type="reset" name="reset" class="btn btn-outline-info my-2 form-control">
+</div>
+<div class="col">
+<input type="submit" name="Create" class="btn btn-outline-success my-2 form-control">
+</div>
+</div>
+</div>
+</form>
+<div class="card col-md-8 shadow-lg">
+<div class="card-body">
+<h3 >List of Restaurants</h3>
+<table class="table table-borderless">
+<tr class="bg-dark text-light">
+<th>s.no</th>
+<th>Restaurant name</th>
+<th>number of items</th>
+<th>timings</th>
+<th>address</td>
+<th>operations</th>
+</tr>
+{% for k in a %}
+<tr>
+<td>{{forloop.counter}}</td>
+<td><a href="{% url 'rsvw' k.id %}">{{k.rname}}</a></td>
+<td>{{k.nitems}}</td>
+<td>{{k.loc}}</td>
+<td>{{k.address}}</td>
+<td><a href="{% url 'rsup' k.id %}" class="btn btn-outline-warning">update</a><a href="{% url 'rsdel' k.id %}" class="btn btn-outline-danger mx-2">delete</a></td>
+</tr>
+{% endfor %}
+</table>
+</div>
+
+</div>
+
+
+</div>
+{% endblock %}
